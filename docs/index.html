@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sathwik Peddi | Machine Learning Engineer Portfolio</title>
+    <!-- Premium Google Fonts: Geist & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #F7F6F3; /* Warm off-white identity background */
+            --navy-navy: #1C2D42; /* Premium Deep Slate Navy */
+            --navy-text: #1D3557; /* Core Deep Navy */
+            --accent-gold: #D4AF37; /* Warm Gold */
+            --accent-gold-hover: #C5A028;
+            --card-bg: #FFFFFF;
+            --muted-text: #4A6B82;
+            --border-color: #E2E1DC;
+            --shadow-sm: 0 2px 4px rgba(29, 53, 87, 0.02);
+            --shadow-md: 0 8px 30px rgba(29, 53, 87, 0.04);
+            --shadow-lg: 0 20px 40px rgba(29, 53, 87, 0.08);
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--navy-text);
+            line-height: 1.6;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* Hero Header with subtle pattern background */
+        header {
+            position: relative;
+            background-color: #FAF9F6;
+            background-image: url('assets/hero_background_texture.jpg');
+            background-size: cover;
+            background-position: center;
+            border-bottom: 1px solid var(--border-color);
+            padding: 100px 24px 80px;
+            text-align: center;
+        }
+
+        .header-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .profile-container {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 24px;
+            border-radius: 50%;
+            border: 4px solid var(--card-bg);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            background: #E2E1DC;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-fallback {
+            font-weight: 700;
+            font-size: 2rem;
+            color: var(--muted-text);
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: var(--navy-navy);
+            margin-bottom: 8px;
+        }
+
+        .tagline {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--muted-text);
+            margin-bottom: 24px;
+        }
+
+        /* The Core Claim */
+        .claim-container {
+            max-width: 760px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-left: 4px solid var(--navy-navy);
+            padding: 20px 28px;
+            border-radius: 4px 12px 12px 4px;
+            box-shadow: var(--shadow-sm);
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .claim-text {
+            font-size: 1.15rem;
+            font-style: italic;
+            font-weight: 600;
+            color: var(--navy-text);
+            line-height: 1.5;
+        }
+
+        /* Container Main Grid */
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 24px 100px;
+        }
+
+        section {
+            margin-bottom: 80px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 32px;
+            position: relative;
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--navy-navy);
+            z-index: 2;
+            background-color: var(--bg-color);
+            padding-right: 16px;
+        }
+
+        .section-header::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 50%;
+            height: 1px;
+            background-color: var(--border-color);
+            z-index: 1;
+        }
+
+        /* Featured Case Card */
+        .featured-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition-smooth);
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+        }
+
+        @media (max-width: 768px) {
+            .featured-card {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .featured-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: #D3D0C5;
+        }
+
+        .featured-body {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .featured-tag {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.15);
+            color: #997818;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+            align-self: flex-start;
+        }
+
+        .featured-title {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--navy-navy);
+            margin-bottom: 12px;
+            line-height: 1.25;
+            letter-spacing: -0.02em;
+        }
+
+        .featured-desc {
+            color: var(--muted-text);
+            margin-bottom: 24px;
+            font-size: 1rem;
+        }
+
+        .featured-metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 28px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #F0EFEA;
+        }
+
+        .metric-item .label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--muted-text);
+        }
+
+        .metric-item .val {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--navy-navy);
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--navy-navy);
+            color: var(--card-bg);
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: var(--transition-smooth);
+            text-align: center;
+            border: 1px solid transparent;
+        }
+
+        .btn:hover {
+            background: #2D4665;
+            transform: translateY(-1px);
+        }
+
+        .btn-gold {
+            background: var(--accent-gold);
+            color: var(--navy-navy);
+        }
+
+        .btn-gold:hover {
+            background: var(--accent-gold-hover);
+        }
+
+        .featured-img-container {
+            background-color: #FAF9F6;
+            background-image: url('assets/case_study_2_screenshot.png');
+            background-size: cover;
+            background-position: left center;
+            min-height: 300px;
+            border-left: 1px solid var(--border-color);
+        }
+
+        @media (max-width: 768px) {
+            .featured-img-container {
+                min-height: 250px;
+                border-left: none;
+                border-top: 1px solid var(--border-color);
+            }
+        }
+
+        /* Other Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-smooth);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            border-color: #D3D0C5;
+        }
+
+        .project-status {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 2px 8px;
+            background: #F1EFEA;
+            border-radius: 4px;
+            color: var(--muted-text);
+            margin-bottom: 12px;
+            align-self: flex-start;
+        }
+
+        .project-status.live {
+            background: #E8F5E9;
+            color: #2E7D32;
+        }
+
+        .project-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--navy-navy);
+        }
+
+        .project-desc {
+            color: var(--muted-text);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .project-link {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--navy-navy);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .project-link:hover {
+            color: var(--accent-gold);
+        }
+
+        /* Skills Matrix Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 16px;
+        }
+
+        .skill-badge {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--navy-text);
+            box-shadow: var(--shadow-sm);
+            font-family: 'Geist Mono', monospace;
+            transition: var(--transition-smooth);
+        }
+
+        .skill-badge:hover {
+            border-color: var(--accent-gold);
+            transform: translateY(-2px);
+        }
+
+        /* Identity Kit & Proof Grid */
+        .identity-kit {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .identity-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .colors-container {
+            display: flex;
+            gap: 12px;
+        }
+
+        .color-dot {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--muted-text);
+        }
+
+        .color-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            margin-bottom: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--navy-navy);
+            color: var(--card-bg);
+            padding: 40px 24px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        footer p {
+            max-width: 800px;
+            margin: 0 auto 16px;
+            opacity: 0.8;
+        }
+
+        footer a {
+            color: var(--accent-gold);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <div class="profile-container">
+                <!-- Headshot placeholder - instruct user to replace with real photo -->
+                <img src="assets/profile_headshot.jpg" alt="Sathwik Peddi" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                <div class="profile-fallback" style="display:none; width:100%; height:100%; align-items:center; justify-content:center; background:#E2E1DC; color:#1C2D42; font-family:'Inter',sans-serif">SP</div>
+            </div>
+            <h1>Sathwik Peddi</h1>
+            <div class="tagline">Machine Learning Intern &amp; Applied Search Intelligence Engineer</div>
+            
+            <div class="claim-container">
+                <div class="claim-text">
+                    "I build and deploy production-grade machine learning pipelines that solve real search discoverability and content optimization problems."
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Featured Project (Case Study 1) -->
+        <section id="featured">
+            <div class="section-header">
+                <h2>Featured Case Study</h2>
+            </div>
+            
+            <div class="featured-card">
+                <div class="featured-body">
+                    <div class="featured-tag">Machine Learning Capstone</div>
+                    <h3 class="featured-title">Search Intelligence Content Refresh Queue</h3>
+                    <p class="featured-desc">
+                        Prioritized refresh pipeline built on trailing-90-day search console logs. Solves editor capacity constraints using a Random Forest classifier that identifies content decay and delivers a 3.08x lift over manual baseline rules.
+                    </p>
+                    
+                    <div class="featured-metrics">
+                        <div class="metric-item">
+                            <div class="label">Precision@50 Lift</div>
+                            <div class="val">3.08x</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="label">Model ROC AUC</div>
+                            <div class="val">0.750</div>
+                        </div>
+                    </div>
+                    
+                    <a href="case-study.html" class="btn btn-gold">Read Case Study</a>
+                </div>
+                <div class="featured-img-container"></div>
+            </div>
+        </section>
+
+        <!-- Other Projects -->
+        <section id="projects">
+            <div class="section-header">
+                <h2>Other Case Studies</h2>
+            </div>
+            
+            <div class="projects-grid">
+                <!-- Project 1 -->
+                <div class="project-card">
+                    <div class="project-status live">Live Case</div>
+                    <h3 class="project-title">Prompt Engineering Ladder: Context-Aware Case Audit</h3>
+                    <p class="project-desc">
+                        A structured prompting architecture built to audit AI-generated content suggestions. Maps inputs, system instructions, and outputs through an evaluation chain to prevent hallucinations.
+                    </p>
+                    <a href="https://github.com/sathwikpeddi0712/ml-internship-flyrank/blob/main/work/notebooks/w02_ml_task_framing.ipynb" class="project-link" target="_blank">Explore Code &rarr;</a>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="project-card">
+                    <div class="project-status">In Progress</div>
+                    <h3 class="project-title">NLP Context-Aware Phishing &amp; Fake News Detector</h3>
+                    <p class="project-desc">
+                        Natural Language Processing pipeline built to classify deceptive text structures, scanning linguistic features and tf-idf frequency vectors.
+                    </p>
+                    <span class="project-link" style="color:var(--muted-text); cursor:not-allowed">Planned Development</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Matrix -->
+        <section id="skills">
+            <div class="section-header">
+                <h2>Technical Toolkit</h2>
+            </div>
+            
+            <div class="skills-grid">
+                <div class="skill-badge">Python</div>
+                <div class="skill-badge">scikit-learn</div>
+                <div class="skill-badge">DuckDB</div>
+                <div class="skill-badge">HuggingFace</div>
+                <div class="skill-badge">SQL</div>
+                <div class="skill-badge">Pandas / NumPy</div>
+                <div class="skill-badge">Git Versioning</div>
+            </div>
+        </section>
+
+        <!-- Identity Kit -->
+        <section id="identity">
+            <div class="section-header">
+                <h2>Identity Kit &amp; Brand System</h2>
+            </div>
+            
+            <div class="identity-kit">
+                <div class="identity-row">
+                    <div>
+                        <h4 style="margin-bottom:8px">Visual System</h4>
+                        <p style="font-size:0.9rem; color:var(--muted-text)">Clean typography combined with warm hues designed to project directness and technical grounding.</p>
+                    </div>
+                    
+                    <div class="colors-container">
+                        <div class="color-dot">
+                            <div class="color-circle" style="background:#F7F6F3"></div>
+                            <span>#F7F6F3</span>
+                        </div>
+                        <div class="color-dot">
+                            <div class="color-circle" style="background:#1D3557"></div>
+                            <span>#1D3557</span>
+                        </div>
+                        <div class="color-dot">
+                            <div class="color-circle" style="background:#D4AF37"></div>
+                            <span>#D4AF37</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Sathwik Peddi &middot; Built for the FlyRank AI Fluency Internship</p>
+        <p>Review the repository on <a href="https://github.com/sathwikpeddi0712/ml-internship-flyrank" target="_blank">GitHub</a></p>
+    </footer>
+
+</body>
+</html>

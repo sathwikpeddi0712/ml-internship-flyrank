@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Study: Search Intelligence Content Refresh Queue | Sathwik Peddi</title>
+    <!-- Premium Google Fonts: Geist & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #F7F6F3; /* Warm off-white identity background */
+            --navy-navy: #1C2D42; /* Premium Deep Slate Navy */
+            --navy-text: #1D3557; /* Core Deep Navy */
+            --accent-gold: #D4AF37; /* Warm Gold */
+            --accent-gold-hover: #C5A028;
+            --card-bg: #FFFFFF;
+            --muted-text: #4A6B82;
+            --border-color: #E2E1DC;
+            --shadow-sm: 0 2px 4px rgba(29, 53, 87, 0.02);
+            --shadow-md: 0 8px 30px rgba(29, 53, 87, 0.04);
+            --shadow-lg: 0 20px 40px rgba(29, 53, 87, 0.08);
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--navy-text);
+            line-height: 1.6;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* Top Navigation Bar */
+        nav {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px 24px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: var(--navy-navy);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-logo span {
+            color: var(--accent-gold);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--navy-text);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: var(--transition-smooth);
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-gold);
+        }
+
+        /* Header block */
+        .case-header {
+            background-color: #FAF9F6;
+            background-image: url('assets/hero_background_texture.jpg');
+            background-size: cover;
+            border-bottom: 1px solid var(--border-color);
+            padding: 80px 24px;
+        }
+
+        .case-header-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .case-tag {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.15);
+            color: #997818;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-size: 2.75rem;
+            font-weight: 800;
+            color: var(--navy-navy);
+            line-height: 1.2;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .case-lead {
+            font-size: 1.2rem;
+            color: var(--muted-text);
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        /* Main Content Layout */
+        .main-layout {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 24px 100px;
+            display: grid;
+            grid-template-columns: 2.3fr 0.7fr;
+            gap: 48px;
+        }
+
+        @media (max-width: 768px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+
+        .case-content {
+            min-width: 0; /* Prevents layout break */
+        }
+
+        .case-sidebar {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+
+        .article-section {
+            margin-bottom: 48px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--navy-navy);
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        p {
+            font-size: 1.05rem;
+            color: var(--navy-text);
+            margin-bottom: 20px;
+            opacity: 0.95;
+        }
+
+        ul {
+            margin-bottom: 24px;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 12px;
+            font-size: 1.05rem;
+            color: var(--navy-text);
+        }
+
+        /* Figure and Images */
+        .figure {
+            margin: 32px 0;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .figure img {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid #FAF9F6;
+        }
+
+        .figure-caption {
+            margin-top: 12px;
+            font-size: 0.85rem;
+            color: var(--muted-text);
+            text-align: center;
+        }
+
+        /* Metric Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+            font-size: 0.95rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: #FAF9F6;
+            font-weight: 700;
+            color: var(--navy-navy);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .best-row {
+            background-color: rgba(212, 175, 55, 0.05);
+            font-weight: 600;
+        }
+
+        /* Sidebar Metadata widgets */
+        .widget {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .widget-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--muted-text);
+            margin-bottom: 16px;
+            border-bottom: 1px solid #F0EFEA;
+            padding-bottom: 8px;
+        }
+
+        .meta-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .meta-list li {
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .meta-list li span:last-child {
+            font-weight: 600;
+            color: var(--navy-navy);
+        }
+
+        .meta-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #EAF2F8;
+            color: #2471A3;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .badge-mono {
+            font-family: 'Geist Mono', monospace;
+            background: #F1EFEA;
+            color: var(--navy-text);
+        }
+
+        /* Divider */
+        .divider {
+            height: 24px;
+            background-image: url('assets/section_divider.jpg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            border: none;
+            margin: 48px 0;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--navy-navy);
+            color: var(--card-bg);
+            padding: 40px 24px;
+            text-align: center;
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        footer a {
+            color: var(--accent-gold);
+            text-decoration: none;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">Sathwik<span>.</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#featured">Capstone Case Study</a></li>
+                <li><a href="https://github.com/sathwikpeddi0712/ml-internship-flyrank" target="_blank">GitHub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="case-header">
+        <div class="case-header-content">
+            <div class="case-tag">Machine Learning Capstone Project</div>
+            <h1>Search Intelligence Content Refresh Queue</h1>
+            <div class="case-lead">
+                Building a prioritized, model-driven refresh candidate queue to maximize organic search visibility and solve editor capacity constraints.
+            </div>
+        </div>
+    </header>
+
+    <main class="main-layout">
+        <!-- Main case narrative -->
+        <div class="case-content">
+            <!-- Executive Summary -->
+            <section class="article-section">
+                <h2>1. Executive Summary</h2>
+                <p>
+                    Organic search visibility is subject to decay due to changes in search engine algorithms, competitor content updates, and shifts in search demand. Identifying when an article is decaying and should be refreshed is a key task for content operations.
+                </p>
+                <p>
+                    This project builds an automated, machine-learning-driven priority queue for content editors. By analyzing historical GSC performance trends, the model ranks content according to its probability of decline. Evaluating on a client holdout validation split, the best model achieves a **Precision@50 of 0.740**, showing a **3.08x lift** over a standard manual rule baseline.
+                </p>
+            </section>
+
+            <div class="divider"></div>
+
+            <!-- The Problem -->
+            <section class="article-section">
+                <h2>2. The Capacity Constraint</h2>
+                <p>
+                    Content editing teams face a strict capacity constraint: reviewing, rewriting, and re-publishing an article requires substantial editorial effort. A typical content team can only review a limited number of articles per week (e.g., 20 to 50 pages).
+                </p>
+                <p>
+                    A standard binary classification output (identifying pages as "declining" or "stable") fails to solve this problem because it doesn't prioritize which pages are the most urgent. We framed this task as a **scoring and ranking** problem, sorting all pages by their predicted probability of decline to output a prioritized top-K review queue.
+                </p>
+            </section>
+
+            <div class="divider"></div>
+
+            <!-- The Data Contract -->
+            <section class="article-section">
+                <h2>3. The Data Grain &amp; Contract</h2>
+                <p>
+                    We used the 30,000-row anonymized starter dataset (`data/raw/content_refresh_anonymized.csv`), representing 32 client sites over trailing 90-day windows.
+                </p>
+                <ul>
+                    <li><strong>Unit of Analysis:</strong> One row represents a single content item (page) for a specific client.</li>
+                    <li><strong>Target Variable:</strong> `is_declining_label` = 1 when Search Console impressions drop by >20% month-over-month (`impressions_last_30d < 0.8 * impressions_prev_30d`). Otherwise, it is 0.</li>
+                    <li><strong>Feature Set:</strong> Built exclusively on prior-window authority and metadata signals (impressions, clicks, average position, click-through rates, word count, scroll rate, engagement rate, and freshness). All future-window leakages (e.g. last-30-day metrics) were audited and removed.</li>
+                </ul>
+            </section>
+
+            <div class="divider"></div>
+
+            <!-- Split design -->
+            <section class="article-section">
+                <h2>4. Honest Split Design (Grouped Holdout)</h2>
+                <p>
+                    Pages from the same client site share search engine authority, CMS platforms, and industry-specific seasonal demand. If we performed a standard randomized train/test split, the model would memorize client-specific signals, resulting in severe data leakage.
+                </p>
+                <p>
+                    To ensure honest validation, we implemented a **Grouped Client Split (`client_holdout`)**. We partitioned the dataset by `client_id`, holding out 20% of the client sites completely (2,325 rows) in the test set, and using the remaining 80% (27,675 rows) for training. This evaluates how well the model generalizes to completely unseen websites.
+                </p>
+            </section>
+
+            <div class="divider"></div>
+
+            <!-- Model Comparison -->
+            <section class="article-section">
+                <h2>5. Model Evaluation &amp; Comparison</h2>
+                <p>
+                    We trained three models (Logistic Regression, Decision Tree, Random Forest) and compared them against the rule-based baseline on the client holdout:
+                </p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Model</th>
+                            <th>ROC AUC</th>
+                            <th>Avg Precision</th>
+                            <th>Precision@50</th>
+                            <th>Recall</th>
+                            <th>F1 Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Baseline Rules</td>
+                            <td>0.627</td>
+                            <td>0.468</td>
+                            <td>0.240</td>
+                            <td>0.189</td>
+                            <td>0.274</td>
+                        </tr>
+                        <tr>
+                            <td>Logistic Regression</td>
+                            <td>0.700</td>
+                            <td>0.522</td>
+                            <td>0.400</td>
+                            <td>0.567</td>
+                            <td>0.566</td>
+                        </tr>
+                        <tr>
+                            <td>Decision Tree</td>
+                            <td>0.742</td>
+                            <td>0.575</td>
+                            <td>0.540</td>
+                            <td>0.716</td>
+                            <td>0.634</td>
+                        </tr>
+                        <tr class="best-row">
+                            <td>Random Forest (Best)</td>
+                            <td>0.750</td>
+                            <td>0.618</td>
+                            <td>0.740</td>
+                            <td>0.744</td>
+                            <td>0.640</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="font-size:0.9rem; color:var(--muted-text)">
+                    *Note: The base rate of decline in the dataset is 54.2%.
+                </p>
+                <p>
+                    The **Random Forest** ensemble achieves the highest **Precision@50 of 0.740**, meaning that in the top 50 recommended refresh candidates, 74.0% are true decaying pages. This provides a 3.08x lift over manual rules baseline, indicating editors can prevent significant organic traffic loss by reviewing the model-ranked queue.
+                </p>
+                
+                <div class="figure">
+                    <img src="assets/identity_kit_screenshot.png" alt="Identity Kit Visualization">
+                    <div class="figure-caption">Visualizing data metrics and feature profiles across client splits.</div>
+                </div>
+            </section>
+
+            <div class="divider"></div>
+
+            <!-- Errors and Interpretation -->
+            <section class="article-section">
+                <h2>6. Features &amp; Error Analysis</h2>
+                <p>
+                    The Random Forest model relies heavily on search authority signals. The top features are:
+                </p>
+                <ul>
+                    <li>`days_with_impressions` (15.8%): Measures search consistency.</li>
+                    <li>`log_impressions_90d` (12.8%): Total organic visibility volume.</li>
+                    <li>`avg_position` (10.9%): Organic ranking location.</li>
+                    <li>`content_age_days` (9.5%): Freshness/staleness indicator.</li>
+                </ul>
+                
+                <h3 style="margin:24px 0 12px; font-size:1.2rem; color:var(--navy-navy)">Systematic Error Analysis:</h3>
+                <p>
+                    <strong>False Positives (Predicted Decline, Actually Growing):</strong> Often occurs on informational pages that target high-volume queries with zero-click intent. These pages experience impression growth (ranking increases, `trend = up`) but record 0.0% CTR, which the model misidentifies as low-quality content decay.
+                </p>
+                <p>
+                    <strong>False Negatives (Predicted Stable, Actually Declined):</strong> Primarily low-volume items (e.g. 2-3 impressions in 90 days). The proxy MoM label is highly noisy on low-volume data (a drop of 1 impression triggers the 20% decline label). The model correctly assigns low probability here because these pages lack search Console volume to warrant an editorial rewrite.
+                </p>
+            </section>
+        </div>
+
+        <!-- Sidebar Metadata -->
+        <div class="case-sidebar">
+            <!-- Project metadata -->
+            <div class="widget">
+                <h3 class="widget-title">Project Details</h3>
+                <ul class="meta-list">
+                    <li><span>Track</span> <span class="badge">Machine Learning</span></li>
+                    <li><span>Split Strategy</span> <span class="badge badge-mono">client_holdout</span></li>
+                    <li><span>Train Size</span> <span>27,675 rows</span></li>
+                    <li><span>Test Size</span> <span>2,325 rows</span></li>
+                    <li><span>Feature Count</span> <span>52 features</span></li>
+                </ul>
+            </div>
+
+            <!-- Deliverables -->
+            <div class="widget">
+                <h3 class="widget-title">Resources</h3>
+                <ul class="meta-list">
+                    <li><span>GitHub Repo</span> <a href="https://github.com/sathwikpeddi0712/ml-internship-flyrank" target="_blank">Explore Code</a></li>
+                    <li><span>Queue CSV</span> <a href="assets/case_study_1_screenshot.png" target="_blank">Preview CSV</a></li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Sathwik Peddi &middot; Built for the FlyRank AI Fluency Internship</p>
+        <p>Return to <a href="index.html">Homepage</a></p>
+    </footer>
+
+</body>
+</html>
