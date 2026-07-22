@@ -501,6 +501,68 @@
                     <strong>False Negatives (Predicted Stable, Actually Declined):</strong> Primarily low-volume items (e.g. 2-3 impressions in 90 days). The proxy MoM label is highly noisy on low-volume data (a drop of 1 impression triggers the 20% decline label). The model correctly assigns low probability here because these pages lack search Console volume to warrant an editorial rewrite.
                 </p>
             </section>
+
+            <div class="divider"></div>
+
+            <!-- Ranked Recommendations -->
+            <section class="article-section">
+                <h2>7. Ranked Recommendations &amp; Action Playbook</h2>
+                <p>
+                    To put model outcomes into practice, we built an operational **Content Action Playbook**. Rather than delivering simple classifications, the playbook maps page archetypes to concrete editorial actions based on a composite score:
+                </p>
+                <ul>
+                    <li><strong>Thin / High-Impression Content</strong> &rarr; <code>expand_and_refresh</code>: Expand content depth, add fresh data/quotes, and cover topical gaps to match intent.</li>
+                    <li><strong>High-Position / Low-CTR Content</strong> &rarr; <code>refresh_and_review_ctr</code>: Optimize title tags, meta descriptions, and SERP snippets to recover CTR.</li>
+                    <li><strong>High-Traffic / Declining Content</strong> &rarr; <code>refresh</code>: Update statistics, remove dead outbound links, and improve internal linking.</li>
+                    <li><strong>Zombie / Low-Traffic Legacy Content</strong> &rarr; <code>prune_or_redirect</code>: Evaluate for consolidations via 301 redirects or prune to preserve crawl budget.</li>
+                </ul>
+
+                <h3 style="margin:24px 0 12px; font-size:1.2rem; color:var(--navy-navy)">Human-in-the-Loop Safeguards:</h3>
+                <p>
+                    To prevent automated degradation of high-value assets, editors must execute a pre-publishing checklist confirming: (1) search intent alignment, (2) factual and date accuracy, and (3) canonical technical health. <strong>The No-Go List:</strong> Core brand assets and YMYL (Your Money Your Life) content must never undergo automated updates.
+                </p>
+
+                <div class="figure">
+                    <img src="assets/w07_action_distribution.png" alt="Playbook Action Distribution">
+                    <div class="figure-caption">Figure 1: Workload distribution across suggested editorial actions.</div>
+                </div>
+
+                <div class="figure">
+                    <img src="assets/w07_score_vs_impressions.png" alt="Score vs Search Visibility">
+                    <div class="figure-caption">Figure 2: Scatter plot of Playbook Score vs. GSC Log Impressions.</div>
+                </div>
+            </section>
+
+            <div class="divider"></div>
+
+            <!-- Reproducibility -->
+            <section class="article-section">
+                <h2>8. Reproducibility &amp; Environment</h2>
+                <p>
+                    This project is fully reproducible from our public repository. To recreate the model training, predictions, and charts from a clean state, execute:
+                </p>
+                <pre style="background:#FAF9F6; border:1px solid var(--border-color); padding:16px; border-radius:8px; font-family:'Geist Mono', monospace; font-size:0.9rem; margin-bottom:20px; overflow-x:auto;">
+git clone https://github.com/sathwikpeddi0712/ml-internship-flyrank.git
+cd ml-internship-flyrank
+pip install -r requirements.txt
+python scripts/run_all.py</pre>
+                <p>
+                    The Random Forest model uses a fixed random seed of <code>42</code> for the client-holdout partition, ensuring identical train/test splits and evaluation metrics on every run.
+                </p>
+            </section>
+
+            <div class="divider"></div>
+
+            <!-- Acknowledgments & Data Credit -->
+            <section class="article-section">
+                <h2>9. Acknowledgments &amp; Data Credit</h2>
+                <p>
+                    This work is built on the real-world search intelligence dataset provided by the FlyRank Applied Search Intelligence Internship program. We thank the mentors and track leads for preparing the dataset slice and providing structural templates.
+                </p>
+                <p>
+                    <em>Learn more about search intelligence and content optimization at <a href="https://flyrank.ai" target="_blank" style="color:var(--navy-navy); font-weight:600;">FlyRank.ai</a>.</em>
+                </p>
+            </section>
         </div>
 
         <!-- Sidebar Metadata -->
@@ -529,7 +591,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2026 Sathwik Peddi &middot; Built for the FlyRank AI Fluency Internship</p>
+        <p>&copy; 2026 Sathwik Peddi &middot; Built on the <a href="https://flyrank.ai" target="_blank" style="color:var(--accent-gold);">FlyRank ML Internship dataset</a></p>
         <p>Return to <a href="index.html">Homepage</a></p>
     </footer>
 

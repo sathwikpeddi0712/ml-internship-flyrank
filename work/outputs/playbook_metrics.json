@@ -1,0 +1,23 @@
+{
+  "total_content_items": 30000,
+  "total_clients": 32,
+  "decline_base_rate": 0.5420666666666667,
+  "action_counts": {
+    "refresh": 11574,
+    "refresh_and_review_ctr": 9741,
+    "monitor": 8209,
+    "prune_or_redirect": 394,
+    "expand_and_refresh": 82
+  },
+  "archetype_counts": {
+    "high_traffic_declining": 14393,
+    "general_content": 8177,
+    "high_pos_low_ctr": 5961,
+    "high_pos_stable": 993,
+    "zombie_legacy_content": 394,
+    "thin_high_impression": 82
+  },
+  "total_impressions_protected": 127384330.0,
+  "top_50_precision_grouped_rf": 0.74,
+  "lift_over_base_rate": 1.37
+}
